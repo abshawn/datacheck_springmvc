@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Spring MVC多视图集成</title>
+<style type="text/css">
+	body{
+		margin-top: 0;
+		margin-left: 0;
+	}
+</style>
+</head>
+<body>
+<textarea rows="80" cols="160" readonly="readonly">
+
+>>>>>>dispatch-servlet.xml环境配置<<<<<<
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:component-scan	base-package="com.spring.action" />
+	
+	<!-- velocity环境配置 -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<!-- velocity配置文件路径 -->
+		<property name="configLocation" value="/WEB-INF/velocity.properties"/>
+		<!-- velocity模板路径 -->
+		<property name="resourceLoaderPath" value="/WEB-INF/velocity/"/>
+	</bean>
+	
+	<!-- FreeMarker环境配置 -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- freemarker模板位置 -->
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+		<property name="freemarkerSettings">
+			<props>
+				 <!-- 设置标签类型 两种：[] 和 <> 。[] 这种标记解析要快些 --> 
+				<prop key="tag_syntax">auto_detect</prop>
+				<prop key="template_update_delay">5</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<!-- 设置数字格式 以免出现 000.00 -->  
+				<prop key="number_format">#.##</prop>
+				<!-- NULL的默认处理为空字符串 -->  
+				<prop key="classic_compatible">true</prop>
+				<prop key="whitespace_stripping">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 自定义的多视图解析类 -->
+	<bean id="viewResolver"  
+     class="com.spring.action.MultiViewResover">  
+        <property name="resolvers">  
+            <map>  
+                <entry key="jsp">  
+                    <bean  
+                     class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+                        <property name="viewClass"  value="org.springframework.web.servlet.view.JstlView"/>  
+                        <property name="prefix" value="/WEB-INF/jsp/"/>  
+                        <property name="suffix" value=".jsp"/>  
+                    </bean>  
+                </entry>  
+                <entry key="ftl">  
+                    <bean  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
+                        <property name="contentType" value="text/html; charset=UTF-8" />
+						<property name="cache" value="true"/>
+						<property name="prefix" value="/"/>	
+						<property name="suffix" value=".ftl"/>  
+                    </bean>  
+                </entry>  
+                <entry key="vm">  
+                    <bean  
+                     class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">  
+                     	<property name="contentType" value="text/html; charset=UTF-8" />
+                        <property name="cache" value="true"/>  
+                        <property name="prefix" value="/"/>  
+                        <property name="suffix" value=".vm"/>  
+                    </bean>  
+                </entry>  
+            </map>  
+        </property>  
+    </bean>  
+	
+</beans>
+
+
+</textarea>
+</body>
+</html>

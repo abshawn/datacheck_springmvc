@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>datacheck_springmvc</groupId>
+  <artifactId>datacheck_springmvc</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name/>
+  <description/>
+
+  <properties>
+  	<!-- 定义各个jar包对应的版本变量-->
+    <spring.version>3.0.5.RELEASE</spring.version>
+    <freemarker.version>2.3.19</freemarker.version>
+    <velocity.version>1.7</velocity.version>
+    <quartz.version>1.8.5</quartz.version>
+ 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+   	<!-- spring需要的jar包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+		</dependency>		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+		</dependency>
+
+   <!-- 模板库 -->
+       <dependency>
+           <groupId>org.freemarker</groupId>
+           <artifactId>freemarker</artifactId>
+           <version>${freemarker.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.velocity</groupId>
+           <artifactId>velocity</artifactId>
+           <version>${velocity.version}</version>
+       </dependency>
+
+   <!-- 定时器quartz 也就是自动任务-->   
+     <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>  
+  </dependencies>
+
+  <build>
+    <sourceDirectory>${basedir}/src</sourceDirectory>
+    <outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webappDirectory>${basedir}/WebRoot</webappDirectory>
+          <warSourceDirectory>${basedir}/WebRoot</warSourceDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="datacheck_springmvc"
+  id="myeclipse.1461305798246"
+  context-root="/datacheck_springmvc"
+  j2ee-spec="6.0"
+  archive="datacheck_springmvc.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
